@@ -4,3 +4,8 @@ dist
 screenshots
 
 *.tsbuildinfo
+server/data
+.env
+*.db
+*.db-wal
+*.db-shm

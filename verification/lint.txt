@@ -21,5 +21,3 @@ All matched files use Prettier code style!
 
 Checking formatting...
 All matched files use Prettier code style!
-
-exit=0

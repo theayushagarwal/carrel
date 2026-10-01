@@ -1,7 +1,11 @@
 $ npm run build
 
 > build
-> npm run build --workspaces
+> npm run build --workspace shared && npm run build --workspace client && npm run build --workspace server
+
+
+> @carrel/shared@0.1.0 build
+> tsc -p tsconfig.json
 
 
 > @carrel/client@0.1.0 build
@@ -9,10 +13,22 @@ $ npm run build
 
 vite v6.4.3 building for production...
 transforming...
-✓ 403 modules transformed.
+../node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "../node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+../node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 502 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                                                     0.36 kB │ gzip:  0.26 kB
+dist/index.html                                                     0.36 kB │ gzip:   0.26 kB
 dist/assets/ibm-plex-mono-vietnamese-500-normal-C8zxqsMH.woff       5.62 kB
 dist/assets/ibm-plex-mono-vietnamese-400-normal-DDuiU_S-.woff       5.62 kB
 dist/assets/ibm-plex-mono-cyrillic-ext-500-normal-BIfNGwUT.woff     5.77 kB
@@ -33,8 +49,8 @@ dist/assets/ibm-plex-mono-cyrillic-500-normal-Bq9vWWag.woff2        8.46 kB
 dist/assets/instrument-sans-latin-ext-400-normal-r32jotim.woff      8.96 kB
 dist/assets/instrument-sans-latin-ext-500-normal-CAxz3nsc.woff      9.07 kB
 dist/assets/instrument-sans-latin-ext-600-normal-DMks36a2.woff      9.10 kB
-dist/assets/ibm-plex-mono-latin-ext-500-normal-CZ70TYgx.woff       11.77 kB
 dist/assets/ibm-plex-mono-latin-ext-400-normal-D3D2R8hC.woff       11.77 kB
+dist/assets/ibm-plex-mono-latin-ext-500-normal-CZ70TYgx.woff       11.77 kB
 dist/assets/ibm-plex-mono-latin-400-normal-CvHOgSBP.woff           13.14 kB
 dist/assets/ibm-plex-mono-latin-500-normal-CB9ihrfo.woff           13.16 kB
 dist/assets/ibm-plex-mono-latin-ext-400-normal-BmRBH3aV.woff2      13.35 kB
@@ -51,16 +67,10 @@ dist/assets/instrument-sans-latin-500-normal-Z6ESRlEs.woff         21.65 kB
 dist/assets/instrument-sans-latin-600-normal-B9e8oLYv.woff         21.68 kB
 dist/assets/fraunces-latin-ext-400-normal-UihxqfOe.woff            22.37 kB
 dist/assets/fraunces-latin-400-normal-NUPT2cO8.woff                22.48 kB
-dist/assets/index-D0r7uP-G.css                                     17.89 kB │ gzip:  3.94 kB
-dist/assets/index-OjwRx9Uv.js                                     304.23 kB │ gzip: 99.75 kB
-✓ built in 2.09s
+dist/assets/index-BWL0X5-t.css                                     19.40 kB │ gzip:   4.28 kB
+dist/assets/index-DEThfzq1.js                                     388.09 kB │ gzip: 123.95 kB
+✓ built in 2.62s
 
 > @carrel/server@0.1.0 build
 > tsc -p tsconfig.json
 
-
-> @carrel/shared@0.1.0 build
-> tsc -p tsconfig.json
-
-
-exit=0

@@ -1,6 +1,6 @@
-$ grep -rniE "inter|roboto|system-ui|lucide|backdrop-filter|linear-gradient\(.*(purple|indigo|violet)" client/src
+$ grep -rniE "Inter|Roboto|system-ui|Arial|lucide|backdrop-filter|linear-gradient|radial-gradient|Tailwind|shadcn" client/src shared/src server/src --exclude=*.map
 client/src/styles/tokens.css:59:  cursor: pointer;
-client/src/styles/tokens.css:669:  pointer-events: none;
-client/src/App.tsx:218:                <div className="type-ui">A clear interface makes room for thought.</div>
-
-exit=0
+client/src/styles/tokens.css:661:  pointer-events: none;
+client/src/App.tsx:193:                <div className="type-ui">A clear interface makes room for thought.</div>
+server/src/index.ts:269:  const cleanup = setInterval(() => {
+server/src/index.ts:547:    clearInterval(cleanup);

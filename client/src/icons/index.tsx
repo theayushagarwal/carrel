@@ -121,3 +121,20 @@ export const Resize = make(
     <path d="m7 7-3 3 3 3M13 7l3 3-3 3" />
   </>,
 );
+export const Eye = make(
+  <>
+    <circle cx="10" cy="10" r="3" />
+    <path d="M2 10s3-5 8-5 8 5 8 5-3 5-8 5-8-5-8-5Z" />
+  </>,
+);
+export const EyeOff = make(
+  <>
+    <path d="m3 3 14 14M8.5 5.2A9 9 0 0 1 10 5c5 0 8 5 8 5a15 15 0 0 1-2.2 2.6M6 6.3C3.4 7.8 2 10 2 10s3 5 8 5a8 8 0 0 0 2-.3" />
+  </>,
+);
+export const Kick = make(
+  <>
+    <path d="M5 7h10v10H5z" />
+    <path d="M7 7V5h6v2M8 10v4M12 10v4" />
+  </>,
+);

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { participantColors, readableTextOn } from '@carrel/shared';
 import * as Icons from './icons';
+import { Avatar, Button, Input, Panel, StatusBadge, Toast, Toggle } from './ui';
 
 type Status = 'Typing' | 'Active' | 'Idle' | 'Away' | 'Reconnecting';
 const swatches = [
@@ -41,6 +42,7 @@ const iconSet = [
   Icons.Alert,
   Icons.Refresh,
   Icons.Resize,
+  Icons.Kick,
 ];
 const iconNames = [
   'crown',
@@ -66,16 +68,9 @@ const iconNames = [
   'alert',
   'refresh',
   'resize-handle',
+  'kick',
 ];
 
-function StatusBadge({ status }: { status: Status }) {
-  return (
-    <span className={`status status-${status.toLowerCase()}`}>
-      <i />
-      {status}
-    </span>
-  );
-}
 function Section({
   eyebrow,
   title,
@@ -93,26 +88,6 @@ function Section({
       </div>
       {children}
     </section>
-  );
-}
-function Toggle({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: () => void;
-  label: string;
-}) {
-  return (
-    <button
-      className={`toggle ${checked ? 'is-on' : ''}`}
-      onClick={onChange}
-      aria-pressed={checked}
-    >
-      <span className="toggle-knob" />
-      {label}
-    </button>
   );
 }
 function App() {
@@ -265,10 +240,10 @@ function App() {
               <div className="component-column">
                 <span className="eyebrow">BUTTONS</span>
                 <div className="button-row">
-                  <button className="btn primary">Open room</button>
-                  <button className="btn secondary">Copy link</button>
-                  <button className="btn ghost">Cancel</button>
-                  <button className="btn danger">Kick</button>
+                  <Button variant="primary">Open room</Button>
+                  <Button variant="secondary">Copy link</Button>
+                  <Button variant="ghost">Cancel</Button>
+                  <Button variant="danger">Kick</Button>
                 </div>
                 <span className="eyebrow">STATUS</span>
                 <div className="status-row">
@@ -281,35 +256,30 @@ function App() {
                 <span className="eyebrow">INPUTS</span>
                 <label className="field-label">
                   ROOM PASSCODE
-                  <input className="input" placeholder="Enter four words" />
+                  <Input placeholder="Enter four words" aria-label="Room passcode" />
                 </label>
-                <label className="field-label">
-                  WITH ERROR
-                  <input className="input error" value="wrong-passcode" readOnly />
-                  <span className="field-error">That passcode does not match this room.</span>
-                </label>
+                <Input
+                  className="error"
+                  value="wrong-passcode"
+                  readOnly
+                  label="WITH ERROR"
+                  error="That passcode does not match this room."
+                />
               </div>
               <div className="component-column">
                 <span className="eyebrow">PANEL</span>
-                <div className="panel">
-                  <div className="panel-head">
-                    ROOM ACTIVITY <span>LIVE</span>
-                  </div>
+                <Panel label="ROOM ACTIVITY · LIVE">
                   <div className="panel-row">
-                    <span className="avatar" style={{ background: participantColors[0] }}>
-                      M
-                    </span>
+                    <Avatar name="Mae" color={participantColors[0]} />
                     <span>Mae is typing</span>
                     <StatusBadge status="Typing" />
                   </div>
                   <div className="panel-row">
-                    <span className="avatar" style={{ background: participantColors[1] }}>
-                      R
-                    </span>
+                    <Avatar name="Rafi" color={participantColors[1]} />
                     <span>Rafi joined</span>
                     <StatusBadge status="Active" />
                   </div>
-                </div>
+                </Panel>
               </div>
             </div>
           </Section>
@@ -359,12 +329,11 @@ function App() {
         </div>
       </div>
       <div className="grain" />
-      {toast && (
-        <div className="toast" role="status">
-          <Icons.Check size={16} />
-          <span>Changes are local to this specimen.</span>
-        </div>
-      )}
+      <Toast
+        message="Changes are local to this specimen."
+        open={toast}
+        onClose={() => setToast(false)}
+      />
     </main>
   );
 }
