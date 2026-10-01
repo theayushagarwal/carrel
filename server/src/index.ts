@@ -22,6 +22,8 @@ import {
   roomIdSchema,
   type CreateRoom,
   type JoinRoom,
+  ALLOWED_LANGUAGES,
+  controlMessageSchema,
 } from '@carrel/shared';
 
 export type ServerConfig = {
@@ -227,13 +229,22 @@ function verifyToken(secret: string, raw: string) {
   }
 }
 function json(ws: WebSocket, message: unknown) {
-  if (ws.readyState === WebSocket.OPEN) ws.send(Buffer.from(JSON.stringify(message)));
+  if (ws.readyState === WebSocket.OPEN)
+    ws.send(
+      Buffer.concat([Buffer.from([MESSAGE_TYPES.control]), Buffer.from(JSON.stringify(message))]),
+    );
 }
 function control(ws: WebSocket, type: string, payload: Record<string, unknown> = {}) {
   json(ws, { type, ...payload });
 }
 function binary(type: number, payload: Uint8Array) {
   return Buffer.concat([Buffer.from([type]), Buffer.from(payload)]);
+}
+function syncUpdateFrame(update: Uint8Array) {
+  const encoder = encoding.createEncoder();
+  encoding.writeVarUint(encoder, syncProtocol.messageYjsUpdate);
+  syncProtocol.writeUpdate(encoder, update);
+  return binary(MESSAGE_TYPES.sync, encoding.toUint8Array(encoder));
 }
 function generatedRoomId(db: any) {
   for (let i = 0; i < 1000; i++) {
@@ -299,7 +310,7 @@ export function buildApp(config: ServerConfig = loadConfig()) {
       if (origin instanceof WebSocket)
         for (const m of r.members.values())
           if (m.socket !== origin && m.socket.readyState === WebSocket.OPEN)
-            m.socket.send(binary(MESSAGE_TYPES.sync, update));
+            m.socket.send(syncUpdateFrame(update));
       schedule(r);
     });
     rooms.set(row.id, r);
@@ -403,6 +414,7 @@ export function buildApp(config: ServerConfig = loadConfig()) {
     ).run(id, passHash, salt, sha(creatorKey), t, t);
     return reply.code(201).send({
       roomId: id,
+      id,
       creatorKey,
       ticket: issueTicket(id, body.clientId, body.displayName, 'host'),
       sessionToken: issueSession(id, body.clientId),
@@ -486,17 +498,19 @@ export function buildApp(config: ServerConfig = loadConfig()) {
     };
     r.members.set(member.id, member);
     control(ws, 'roster', { members: roster(r) });
+    control(ws, 'room_updated', {
+      language: r.row.language || 'plaintext',
+      readonly: !!r.row.readonly,
+    });
     broadcastRoster(r);
     audit(r, 'joined', member.id, { name: member.name });
-    const encoder = encoding.createEncoder();
-    encoding.writeVarUint(encoder, syncProtocol.messageYjsSyncStep1);
-    syncProtocol.writeSyncStep1(encoder, r.doc);
-    ws.send(binary(MESSAGE_TYPES.sync, encoding.toUint8Array(encoder)));
     ws.on('message', (raw: RawData) => {
+      let frameType = -1;
       try {
         const data = Buffer.from(raw as Buffer);
         if (!data.length) return;
         const type = data[0];
+        frameType = type;
         member.lastSeen = now();
         if (type === MESSAGE_TYPES.sync) {
           if (r.row.readonly && member.role !== 'host') return;
@@ -506,15 +520,82 @@ export function buildApp(config: ServerConfig = loadConfig()) {
           const response = encoding.toUint8Array(enc);
           if (response.length) ws.send(binary(MESSAGE_TYPES.sync, response));
         } else if (type === MESSAGE_TYPES.awareness) {
+          if (data.length <= 1) return;
           awarenessProtocol.applyAwarenessUpdate(r.awareness, data.subarray(1), ws);
           for (const other of r.members.values())
             if (other.socket !== ws && other.socket.readyState === WebSocket.OPEN)
               other.socket.send(data);
         } else if (type === MESSAGE_TYPES.control) {
-          const msg = JSON.parse(data.subarray(1).toString('utf8'));
+          const parsed = controlMessageSchema.safeParse(
+            JSON.parse(data.subarray(1).toString('utf8')),
+          );
+          if (!parsed.success) {
+            control(ws, 'error', { code: 'invalid_control' });
+            return;
+          }
+          const msg = parsed.data;
           if (msg.type === 'ping') control(ws, 'pong');
+          else if (
+            msg.type === 'set_language' ||
+            msg.type === 'set_readonly' ||
+            msg.type === 'make_host' ||
+            msg.type === 'kick'
+          ) {
+            if (member.role !== 'host') {
+              control(ws, 'error', { code: 'forbidden' });
+              return;
+            }
+            if (msg.type === 'set_language') {
+              if (!(ALLOWED_LANGUAGES as readonly string[]).includes(msg.language)) {
+                control(ws, 'error', { code: 'invalid_language' });
+                return;
+              }
+              r.row.language = msg.language;
+              db.prepare('UPDATE rooms SET language=?,updated_at=? WHERE id=?').run(
+                msg.language,
+                now(),
+                r.row.id,
+              );
+              audit(r, 'language_changed', member.id, { language: msg.language });
+              for (const peer of r.members.values())
+                control(peer.socket, 'room_updated', {
+                  language: msg.language,
+                  readonly: !!r.row.readonly,
+                });
+            } else if (msg.type === 'set_readonly') {
+              r.row.readonly = msg.value ? 1 : 0;
+              db.prepare('UPDATE rooms SET readonly=?,updated_at=? WHERE id=?').run(
+                r.row.readonly,
+                now(),
+                r.row.id,
+              );
+              audit(r, 'readonly_changed', member.id, { readonly: !!r.row.readonly });
+              for (const peer of r.members.values())
+                control(peer.socket, 'room_updated', {
+                  language: r.row.language || 'plaintext',
+                  readonly: !!r.row.readonly,
+                });
+            } else if (msg.type === 'kick') {
+              const target = r.members.get(msg.clientId);
+              if (target && target !== member) {
+                audit(r, 'kicked', member.id, { targetId: msg.clientId });
+                target.socket.close(CLOSE_CODES.kicked, 'kicked by host');
+              }
+            } else if (msg.type === 'make_host') {
+              const target = r.members.get(msg.clientId);
+              if (target && target !== member) {
+                member.role = 'member';
+                target.role = 'host';
+                audit(r, 'host_changed', member.id, { targetId: msg.clientId });
+                broadcastRoster(r);
+                for (const peer of r.members.values())
+                  control(peer.socket, 'role_changed', { clientId: target.id, role: 'host' });
+              }
+            }
+          }
         } else control(ws, 'error', { code: 'malformed_frame' });
       } catch {
+        if (frameType === MESSAGE_TYPES.sync) return;
         control(ws, 'error', { code: 'malformed_frame' });
       }
     });

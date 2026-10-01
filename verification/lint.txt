@@ -1,4 +1,3 @@
-$ npm run lint
 
 > lint
 > npm run lint --workspaces

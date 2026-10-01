@@ -1,19 +1,27 @@
 $ tree -L 3 -I node_modules
 [01;34m.[0m
 ├── [01;34mclient[0m
+│   ├── [01;34mdist[0m
+│   │   ├── [01;34massets[0m
+│   │   └── [00mindex.html[0m
 │   ├── [00mindex.html[0m
 │   ├── [00mpackage.json[0m
 │   ├── [01;34msrc[0m
 │   │   ├── [00mApp.tsx[0m
+│   │   ├── [00mTokensPage.tsx[0m
+│   │   ├── [01;34mcollab[0m
 │   │   ├── [01;34mcomponents[0m
+│   │   ├── [01;34meditor[0m
 │   │   ├── [01;34mhooks[0m
 │   │   ├── [01;34micons[0m
 │   │   ├── [00mmain.tsx[0m
 │   │   ├── [00mmotion.ts[0m
+│   │   ├── [01;34mstate[0m
 │   │   ├── [01;34mstyles[0m
 │   │   ├── [00mtestSetup.ts[0m
 │   │   └── [01;34mui[0m
 │   ├── [00mtsconfig.json[0m
+│   ├── [00mtsconfig.tsbuildinfo[0m
 │   ├── [00mvite.config.ts[0m
 │   └── [00mvitest.config.ts[0m
 ├── [00meslint.config.mjs[0m
@@ -21,8 +29,18 @@ $ tree -L 3 -I node_modules
 ├── [00mpackage.json[0m
 ├── [01;34mscreenshots[0m
 │   ├── [00mtokens-dark.webp[0m
-│   └── [00mtokens-paper.webp[0m
+│   ├── [00mtokens-paper.webp[0m
+│   ├── [00mworkspace-dark.webp[0m
+│   └── [00mworkspace-paper.webp[0m
 ├── [01;34mserver[0m
+│   ├── [01;34mdata[0m
+│   │   ├── [00mcarrel.db[0m
+│   │   ├── [00mcarrel.db-shm[0m
+│   │   └── [00mcarrel.db-wal[0m
+│   ├── [01;34mdist[0m
+│   │   ├── [00mindex.js[0m
+│   │   ├── [00mindex.test.js[0m
+│   │   └── [00mseed.js[0m
 │   ├── [00mpackage.json[0m
 │   ├── [01;34msrc[0m
 │   │   ├── [00mindex.test.ts[0m
@@ -30,10 +48,20 @@ $ tree -L 3 -I node_modules
 │   │   └── [00mseed.ts[0m
 │   └── [00mtsconfig.json[0m
 ├── [01;34mshared[0m
+│   ├── [01;34mdist[0m
+│   │   ├── [00mindex.d.ts[0m
+│   │   ├── [00mindex.js[0m
+│   │   ├── [00mindex.test.d.ts[0m
+│   │   ├── [00mindex.test.js[0m
+│   │   ├── [00mphase3.d.ts[0m
+│   │   ├── [00mphase3.js[0m
+│   │   ├── [00mprotocol.d.ts[0m
+│   │   └── [00mprotocol.js[0m
 │   ├── [00mpackage.json[0m
 │   ├── [01;34msrc[0m
 │   │   ├── [00mindex.test.ts[0m
 │   │   ├── [00mindex.ts[0m
+│   │   ├── [00mphase3.ts[0m
 │   │   └── [00mprotocol.ts[0m
 │   └── [00mtsconfig.json[0m
 ├── [01;34mtests[0m
@@ -45,4 +73,4 @@ $ tree -L 3 -I node_modules
     ├── [00mtest.txt[0m
     └── [00mtree.txt[0m
 
-15 directories, 30 files
+23 directories, 50 files

@@ -1,340 +1,643 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { participantColors, readableTextOn } from '@carrel/shared';
-import * as Icons from './icons';
-import { Avatar, Button, Input, Panel, StatusBadge, Toast, Toggle } from './ui';
+import React, { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Link, Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import {
+  participantColors,
+  readableTextOn,
+  type PresenceState,
+  type RoomLanguage,
+  type RosterMember,
+} from '@carrel/shared';
+import { Activity, Chevron, Copy, Crown, Door, LinkIcon, Nib, Resize } from './icons';
+import {
+  Avatar,
+  Badge,
+  Button,
+  ConnectionLight,
+  Input,
+  ListRow,
+  Panel,
+  PasscodeField,
+  Select,
+  StatusBadge,
+  ThemeToggle,
+  Toast,
+} from './ui';
+import {
+  apiBase,
+  getClientId,
+  getDisplayName,
+  getRecentRooms,
+  getRoomSession,
+  paneSizes,
+  saveDisplayName,
+  savePaneSizes,
+  saveRoomSession,
+  wsBase,
+} from './collab/storage';
+import { CarrelProvider } from './collab/CarrelProvider';
+import { useCoalescedAwareness, usePresence } from './collab/usePresence';
+import { CarrelEditor } from './editor/CarrelEditor';
+import { useUIStore } from './state/uiStore';
+import TokensPage from './TokensPage';
 
-type Status = 'Typing' | 'Active' | 'Idle' | 'Away' | 'Reconnecting';
-const swatches = [
-  ['ink-950', '#14110F', 'app background'],
-  ['ink-900', '#1A1613', 'panels'],
-  ['ink-850', '#211C18', 'raised surfaces'],
-  ['ink-700', '#302A24', 'hairline borders'],
-  ['ink-500', '#6F675B', 'muted / disabled'],
-  ['paper-300', '#A39A8B', 'secondary text'],
-  ['paper-100', '#EDE6DA', 'primary text'],
-  ['brass-500', '#D9A441', 'accent / focus'],
-  ['verdigris-500', '#4FA39A', 'online / synced'],
-  ['madder-500', '#D2543A', 'error / destructive'],
-];
-const statuses: Status[] = ['Typing', 'Active', 'Idle', 'Away', 'Reconnecting'];
-const iconSet = [
-  Icons.Crown,
-  Icons.Lock,
-  Icons.LockOpen,
-  Icons.Door,
-  Icons.Nib,
-  Icons.Pin,
-  Icons.Copy,
-  Icons.Check,
-  Icons.Close,
-  Icons.Plus,
-  Icons.User,
-  Icons.Users,
-  Icons.Activity,
-  Icons.Code,
-  Icons.Sun,
-  Icons.Moon,
-  Icons.Wifi,
-  Icons.WifiOff,
-  Icons.Chevron,
-  Icons.LinkIcon,
-  Icons.Alert,
-  Icons.Refresh,
-  Icons.Resize,
-  Icons.Kick,
-];
-const iconNames = [
-  'crown',
-  'padlock-closed',
-  'padlock-open',
-  'door',
-  'nib',
-  'pin',
-  'copy',
-  'check',
-  'close',
-  'plus',
-  'user',
-  'users',
-  'activity',
-  'code',
-  'sun',
-  'moon',
-  'wifi',
-  'wifi-off',
-  'chevron',
-  'link',
-  'alert',
-  'refresh',
-  'resize-handle',
-  'kick',
-];
-
-function Section({
+const labels: Record<RoomLanguage, string> = {
+  plaintext: 'Plain text',
+  markdown: 'Markdown',
+  javascript: 'JavaScript',
+  typescript: 'TypeScript',
+  python: 'Python',
+  java: 'Java',
+  cpp: 'C / C++',
+  sql: 'SQL',
+  json: 'JSON',
+};
+const languages = Object.keys(labels) as RoomLanguage[];
+const api = (path: string, init?: RequestInit) =>
+  fetch(`${apiBase()}${path}`, { headers: { 'content-type': 'application/json' }, ...init });
+function Shell({ children }: { children: ReactNode }) {
+  return (
+    <main className="app-shell">
+      <header className="topbar">
+        <Link to="/" className="brand">
+          <span className="brand-mark">
+            <Nib size={18} />
+          </span>
+          <span>CARREL</span>
+          <span className="brand-slash">/</span>
+          <span className="brand-muted">ROOMS</span>
+        </Link>
+        <span className="mono-label">PHASE 03 // PRESENCE</span>
+      </header>
+      {children}
+    </main>
+  );
+}
+function Lobby() {
+  const recent = getRecentRooms();
+  return (
+    <Shell>
+      <div className="lobby">
+        <span className="eyebrow">A QUIET PLACE TO WORK TOGETHER</span>
+        <h1>
+          Take a seat.
+          <br />
+          <em>Make a mark.</em>
+        </h1>
+        <p className="lede">
+          A small real-time room for notes, code, and the people you trust with both.
+        </p>
+        <div className="lobby-actions">
+          <Link to="/join/new" className="btn primary md">
+            TAKE A SEAT
+          </Link>
+          <Link to="/create" className="btn secondary md">
+            RESERVE A ROOM
+          </Link>
+        </div>
+        {recent.length > 0 && (
+          <Panel label="RECENT ROOMS">
+            <div className="recent-list">
+              {recent.map((room) => (
+                <Link className="list-row recent-room" to={`/r/${room.id}`} key={room.id}>
+                  <span className="mono-label">{room.id}</span>
+                  <span>{room.hasPasscode ? 'locked' : 'open'}</span>
+                  <Chevron size={14} />
+                </Link>
+              ))}
+            </div>
+          </Panel>
+        )}
+      </div>
+    </Shell>
+  );
+}
+function CreateRoom() {
+  const nav = useNavigate();
+  const [id, setId] = useState('');
+  const [available, setAvailable] = useState<boolean | null>(null);
+  const [passcode, setPasscode] = useState('');
+  const [name, setName] = useState(getDisplayName());
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!id) return setAvailable(null);
+    const timer = setTimeout(
+      () =>
+        api(`/api/rooms/check?id=${encodeURIComponent(id)}`)
+          .then((r) => r.json())
+          .then((d) => setAvailable(d.available))
+          .catch(() => setAvailable(null)),
+      300,
+    );
+    return () => clearTimeout(timer);
+  }, [id]);
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setBusy(true);
+    const response = await api('/api/rooms', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id || undefined,
+        passcode: passcode || undefined,
+        displayName: name,
+        clientId: getClientId(),
+      }),
+    });
+    const data = await response.json();
+    if (!response.ok) setError(data.error ?? 'Could not create room');
+    else {
+      saveDisplayName(name);
+      saveRoomSession(data.id, {
+        sessionToken: data.sessionToken,
+        ticket: data.ticket,
+        creatorKey: data.creatorKey,
+        hasPasscode: !!passcode,
+      });
+      nav(`/r/${data.id}`);
+    }
+    setBusy(false);
+  };
+  return (
+    <Shell>
+      <FormPage
+        eyebrow="RESERVE A ROOM"
+        title={
+          <>
+            Make a room
+            <br />
+            <em>worth returning to.</em>
+          </>
+        }
+      >
+        <form onSubmit={submit} className="form-stack">
+          <div className="inline-field">
+            <Input
+              label="ROOM ID"
+              value={id}
+              onChange={(e) => setId(e.target.value.toLowerCase())}
+              placeholder="dijkstra-notes"
+              hint={
+                available === null
+                  ? '3–32 lowercase letters, digits, hyphens'
+                  : available
+                    ? 'Available'
+                    : 'Already taken'
+              }
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setId(`quiet-notes-${Math.floor(Math.random() * 90 + 10)}`)}
+            >
+              GENERATE
+            </Button>
+          </div>
+          <PasscodeField
+            label="PASSCODE (OPTIONAL)"
+            value={passcode}
+            onChange={(e) => setPasscode(e.target.value)}
+          />
+          <Input
+            label="DISPLAY NAME"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          {error && <div className="form-error">{error}</div>}
+          <Button type="submit" disabled={busy || !name}>
+            {busy ? 'CREATING…' : 'RESERVE ROOM'}
+          </Button>
+        </form>
+      </FormPage>
+    </Shell>
+  );
+}
+function JoinRoom() {
+  const nav = useNavigate();
+  const { roomId = '' } = useParams();
+  const actual = roomId === 'new' ? '' : roomId;
+  const [id, setId] = useState(actual);
+  const [name, setName] = useState(getDisplayName());
+  const [passcode, setPasscode] = useState('');
+  const [error, setError] = useState('');
+  const [retry, setRetry] = useState(0);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!retry) return;
+    const timer = setInterval(() => setRetry((v) => Math.max(0, v - 1)), 1000);
+    return () => clearInterval(timer);
+  }, [retry]);
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setBusy(true);
+    const response = await api(`/api/rooms/${encodeURIComponent(id)}/join`, {
+      method: 'POST',
+      body: JSON.stringify({
+        passcode: passcode || undefined,
+        displayName: name,
+        clientId: getClientId(),
+      }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setError(data.error ?? 'Could not join room');
+      if (data.retryAfterSec) setRetry(data.retryAfterSec);
+    } else {
+      saveDisplayName(name);
+      saveRoomSession(id, {
+        sessionToken: data.sessionToken,
+        ticket: data.ticket,
+        hasPasscode: data.hasPasscode,
+      });
+      nav(`/r/${id}`);
+    }
+    setBusy(false);
+  };
+  return (
+    <Shell>
+      <FormPage
+        eyebrow="TAKE A SEAT"
+        title={
+          id ? (
+            <>
+              Enter <em>{id}</em>
+            </>
+          ) : (
+            <>
+              Choose a room
+              <br />
+              <em>from a link.</em>
+            </>
+          )
+        }
+      >
+        <form onSubmit={submit} className="form-stack">
+          {!actual && (
+            <Input
+              label="ROOM ID"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="room-id"
+              required
+            />
+          )}
+          <Input
+            label="DISPLAY NAME"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          {id && <PasscodeField value={passcode} onChange={(e) => setPasscode(e.target.value)} />}
+          {error && (
+            <div className="form-error">
+              {error}
+              {retry ? ` · try again in ${retry}s` : ''}
+            </div>
+          )}
+          <Button type="submit" disabled={busy || !id || !!retry}>
+            {busy ? 'CHECKING…' : 'ENTER ROOM'}
+          </Button>
+        </form>
+      </FormPage>
+    </Shell>
+  );
+}
+function FormPage({
   eyebrow,
   title,
   children,
 }: {
   eyebrow: string;
-  title: string;
-  children: React.ReactNode;
+  title: ReactNode;
+  children: ReactNode;
 }) {
   return (
-    <section className="section">
-      <div className="section-heading">
-        <span className="eyebrow">{eyebrow}</span>
-        <h2>{title}</h2>
-      </div>
+    <div className="form-page">
+      <Link to="/" className="back-link">
+        ← LOBBY
+      </Link>
+      <span className="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
       {children}
-    </section>
+    </div>
   );
 }
-function App() {
-  const [theme, setTheme] = useState<'dark' | 'paper'>('dark');
-  const [grid, setGrid] = useState(false);
-  const [toast, setToast] = useState(false);
+function WorkspaceRoute() {
+  const { roomId = '' } = useParams();
+  return <Workspace roomId={roomId} />;
+}
+function Workspace({ roomId }: { roomId: string }) {
+  const nav = useNavigate();
+  const session = getRoomSession(roomId);
+  const [ticket, setTicket] = useState(session?.ticket);
+  const [language, setLanguage] = useState<RoomLanguage>('plaintext');
+  const [readonly, setReadonly] = useState(false);
+  const [toast, setToast] = useState('');
+  const [left, setLeft] = useState(paneSizes().leftWidth ?? 260);
+  const [right, setRight] = useState(paneSizes().rightWidth ?? 320);
+  const [feed, setFeed] = useState<any[]>([]);
+  const provider = useMemo(
+    () =>
+      ticket ? new CarrelProvider(`${wsBase()}/ws?ticket=${encodeURIComponent(ticket)}`) : null,
+    [ticket],
+  );
+  const awareness = useCoalescedAwareness(provider);
+  const theme = useUIStore((s) => s.theme);
+  const setUI = useUIStore((s) => s.set);
+  const roster = useUIStore((s) => s.roster);
+  const user = {
+    id: getClientId(),
+    name: getDisplayName() || 'Guest',
+    color: participantColors[0],
+    colorLight: readableTextOn(participantColors[0]),
+  };
+  usePresence(provider, user);
   useEffect(() => {
-    document.documentElement.dataset.theme = theme === 'paper' ? 'paper' : '';
-    document.body.classList.toggle('show-grid', grid);
-  }, [theme, grid]);
+    if (!session && !ticket) nav(`/join/${roomId}`, { replace: true });
+  }, [session, ticket, nav, roomId]);
+  useEffect(() => {
+    if (!provider) return;
+    const a = provider.on('roster', (p) => setUI({ roster: p.members }));
+    const b = provider.on('room_updated', (p) => {
+      setLanguage(p.language as RoomLanguage);
+      setReadonly(p.readonly);
+    });
+    const c = provider.on('audit', (e) => setFeed((items) => [e, ...items].slice(0, 30)));
+    const d = provider.on('kicked', () => nav(`/join/${roomId}`));
+    const e = provider.on('error', (x) => setToast(x.code));
+    return () => {
+      a();
+      b();
+      c();
+      d();
+      e();
+      provider.destroy();
+    };
+  }, [provider, nav, roomId, setUI]);
+  if (!ticket)
+    return (
+      <Shell>
+        <div className="empty-state">
+          <Panel label="ROOM ACCESS">
+            <p>Session expired. Take a seat again.</p>
+            <Link className="btn primary md" to={`/join/${roomId}`}>
+              JOIN ROOM
+            </Link>
+          </Panel>
+        </div>
+      </Shell>
+    );
+  const activeProvider = provider!;
+  const host = roster.find((member) => member.id === user.id)?.role === 'host';
+  const invite = `${window.location.origin}/join/${roomId}`;
+  const copy = (text: string) =>
+    navigator.clipboard?.writeText(text).then(() => setToast('Copied'));
+  const send = (message: Record<string, unknown>) => provider?.sendControl(message);
+  const setPane = (side: 'left' | 'right', value: number) => {
+    const next =
+      side === 'left' ? Math.max(240, Math.min(420, value)) : Math.max(280, Math.min(480, value));
+    if (side === 'left') setLeft(next);
+    else setRight(next);
+    savePaneSizes(side === 'left' ? next : left, side === 'right' ? next : right);
+  };
   return (
-    <main className="app-shell">
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-mark">
-            <Icons.Nib size={18} />
-          </span>
-          <span>CARREL</span>
-          <span className="brand-slash">/</span>
-          <span className="brand-muted">TOKENS</span>
-        </div>
-        <div className="top-actions">
-          <span className="mono-label">FOUNDATION // 01</span>
-          <Toggle
-            checked={theme === 'paper'}
-            onChange={() => setTheme(theme === 'dark' ? 'paper' : 'dark')}
-            label={theme === 'dark' ? 'Paper theme' : 'Dark theme'}
-          />
-          <Toggle checked={grid} onChange={() => setGrid(!grid)} label="Baseline grid" />
-        </div>
-      </header>
-      <div className="page-grid">
-        <aside className="rail">
-          <div className="rail-title">ON THIS PAGE</div>
-          <nav>
-            <a className="active" href="#colors">
-              01 / Color
-            </a>
-            <a href="#type">02 / Type</a>
-            <a href="#shape">03 / Shape</a>
-            <a href="#icons">04 / Icons</a>
-            <a href="#components">05 / Components</a>
-            <a href="#motion">06 / Motion</a>
-          </nav>
-          <div className="rail-note">
-            <span className="status status-active">
-              <i />
-              Synced
-            </span>
-            <p>Design system specimen. Plain, specific, slightly dry.</p>
-          </div>
-        </aside>
-        <div className="content">
-          <div className="intro">
-            <span className="eyebrow">CARREL.UI / DESIGN SYSTEM</span>
-            <h1>
-              Tokens for a room
-              <br />
-              <em>worth staying in.</em>
-            </h1>
-            <p>
-              Warm, tactile foundations for a real-time study workspace. Dark by default. Paper when
-              the lamp is on.
-            </p>
-          </div>
-          <Section eyebrow="01 / COLOR" title="Ink, paper, brass">
-            <div id="colors" className="swatch-grid">
-              {swatches.map(([name, hex, use]) => (
-                <div className="swatch" key={name}>
-                  <div className="swatch-color" style={{ background: hex }}>
-                    <span style={{ color: readableTextOn(hex) }}>{hex}</span>
-                  </div>
-                  <div className="swatch-name">--{name}</div>
-                  <div className="swatch-use">{use}</div>
-                </div>
-              ))}
-            </div>
-            <div className="participant-row">
-              <span className="eyebrow">PARTICIPANT COLORS / 8</span>
-              {participantColors.map((color) => (
-                <span
-                  key={color}
-                  className="participant-dot"
-                  style={{ background: color }}
-                  title={`${color} · readable ${readableTextOn(color)}`}
-                />
-              ))}
-            </div>
-          </Section>
-          <Section eyebrow="02 / TYPE" title="Three voices, one room">
-            <div id="type" className="type-grid">
-              <div>
-                <span className="eyebrow">FRAUNCES / HEADINGS</span>
-                <div className="type-display">
-                  The quiet
-                  <br />
-                  work matters.
-                </div>
-                <span className="type-meta">opsz + SOFT axes · 72 / 40 / 24</span>
-              </div>
-              <div>
-                <span className="eyebrow">INSTRUMENT SANS / UI</span>
-                <div className="type-ui">A clear interface makes room for thought.</div>
-                <div className="type-ui small">Buttons · Inputs · Labels · Status</div>
-                <span className="type-meta">400 / 500 / 600 · 18 / 15 / 13</span>
-              </div>
-              <div>
-                <span className="eyebrow">IBM PLEX MONO / SYSTEM</span>
-                <div className="type-mono">
-                  ROOM_04 / SYNCED
-                  <br />
-                  22:47:08 / 3 PARTICIPANTS
-                </div>
-                <span className="type-meta">11 / 12px · tabular numerals</span>
-              </div>
-            </div>
-          </Section>
-          <Section eyebrow="03 / SHAPE + DEPTH" title="Edges, not blobs">
-            <div id="shape" className="shape-grid">
-              <div className="shape-sample radius-2">
-                <span>2px radius</span>
-                <b>Hairline</b>
-              </div>
-              <div className="shape-sample radius-4">
-                <span>4px radius</span>
-                <b>Panel</b>
-              </div>
-              <div className="shape-sample radius-8">
-                <span>8px radius</span>
-                <b>Raised surface</b>
-              </div>
-              <div className="shadow-sample">
-                <span>shadow token</span>
-                <b>0 8px 24px -12px</b>
-              </div>
-            </div>
-          </Section>
-          <Section eyebrow="04 / ICONS" title="Small marks, drawn by hand">
-            <div id="icons" className="icon-grid">
-              {iconSet.map((Icon, i) => (
-                <div className="icon-cell" key={iconNames[i]}>
-                  <Icon size={20} />
-                  <span>{iconNames[i]}</span>
-                </div>
-              ))}
-            </div>
-          </Section>
-          <Section eyebrow="05 / COMPONENTS" title="Every state earns its name">
-            <div id="components" className="component-grid">
-              <div className="component-column">
-                <span className="eyebrow">BUTTONS</span>
-                <div className="button-row">
-                  <Button variant="primary">Open room</Button>
-                  <Button variant="secondary">Copy link</Button>
-                  <Button variant="ghost">Cancel</Button>
-                  <Button variant="danger">Kick</Button>
-                </div>
-                <span className="eyebrow">STATUS</span>
-                <div className="status-row">
-                  {statuses.map((s) => (
-                    <StatusBadge key={s} status={s} />
-                  ))}
-                </div>
-              </div>
-              <div className="component-column">
-                <span className="eyebrow">INPUTS</span>
-                <label className="field-label">
-                  ROOM PASSCODE
-                  <Input placeholder="Enter four words" aria-label="Room passcode" />
-                </label>
-                <Input
-                  className="error"
-                  value="wrong-passcode"
-                  readOnly
-                  label="WITH ERROR"
-                  error="That passcode does not match this room."
-                />
-              </div>
-              <div className="component-column">
-                <span className="eyebrow">PANEL</span>
-                <Panel label="ROOM ACTIVITY · LIVE">
-                  <div className="panel-row">
-                    <Avatar name="Mae" color={participantColors[0]} />
-                    <span>Mae is typing</span>
-                    <StatusBadge status="Typing" />
-                  </div>
-                  <div className="panel-row">
-                    <Avatar name="Rafi" color={participantColors[1]} />
-                    <span>Rafi joined</span>
-                    <StatusBadge status="Active" />
-                  </div>
-                </Panel>
-              </div>
-            </div>
-          </Section>
-          <Section eyebrow="06 / MOTION" title="A measured pulse">
-            <div id="motion" className="motion-grid">
-              <div className="motion-demo">
-                <div className="waveform">
-                  <i />
-                  <i />
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <span>Typing waveform · 8Hz</span>
-              </div>
-              <div className="motion-demo">
-                <motion.div
-                  className="coin"
-                  animate={{ rotateY: [0, 180, 360] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  C
-                </motion.div>
-                <span>Avatar coin-flip · spring</span>
-              </div>
-              <div className="motion-demo">
-                <div className="ease-line">
-                  <b className="ease-dot" />
-                </div>
-                <span>ease-out · 0.22, 1, 0.36, 1</span>
-              </div>
-            </div>
-          </Section>
-          <footer className="footer">
-            <span>CARREL / PHASE 1</span>
-            <span>TYPE SAFE · FOCUS READY · NO GLOW</span>
-            <button
-              className="toast-trigger"
-              onClick={() => {
-                setToast(true);
-                setTimeout(() => setToast(false), 2200);
-              }}
-            >
-              <Icons.Check size={14} /> Test toast
+    <Shell>
+      <div className="workspace">
+        <header className="workspace-top">
+          <div>
+            <span className="eyebrow">ROOM</span>
+            <button className="room-id mono-label" onClick={() => copy(roomId)}>
+              {roomId} <Copy size={13} />
             </button>
-          </footer>
+          </div>
+          <div className="workspace-actions">
+            <ConnectionLight reconnecting={activeProvider.status !== 'synced'} />
+            <span className="mono-label">{activeProvider.status}</span>
+            <Badge tone={host ? 'accent' : 'neutral'}>{host ? 'HOST' : 'MEMBER'}</Badge>
+            <Select
+              aria-label="Language"
+              value={language}
+              disabled={!host}
+              onChange={(e) => send({ type: 'set_language', language: e.target.value })}
+            >
+              {languages.map((value) => (
+                <option key={value} value={value}>
+                  {labels[value]}
+                </option>
+              ))}
+            </Select>
+            <ThemeToggle
+              paper={theme === 'paper'}
+              onChange={() => {
+                const next = theme === 'paper' ? 'dark' : 'paper';
+                setUI({ theme: next });
+                document.documentElement.dataset.theme = next === 'paper' ? 'paper' : '';
+              }}
+            />
+            <Button variant="ghost" size="sm" onClick={() => copy(invite)}>
+              <LinkIcon size={14} /> INVITE
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => nav('/')}>
+              <Door size={14} /> LEAVE
+            </Button>
+          </div>
+        </header>
+        <div
+          className="workspace-grid"
+          style={{ gridTemplateColumns: `${left}px minmax(480px,1fr) ${right}px` }}
+        >
+          <aside className="workspace-rail">
+            <Panel label={`ROOM / ${roomId}`}>
+              <p className="room-note">A shared surface for a small group.</p>
+              {host && (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => send({ type: 'set_readonly', value: !readonly })}
+                >
+                  {readonly ? 'MAKE EDITABLE' : 'MAKE READ-ONLY'}
+                </Button>
+              )}
+            </Panel>
+            <ResizeControl value={left} onChange={(v) => setPane('left', v)} />
+            <Panel label={`PEOPLE / ${roster.length}`}>
+              <div className="participant-list">
+                {roster.map((person) => (
+                  <Participant
+                    key={person.id}
+                    person={person}
+                    state={
+                      Object.values(awareness).find((x: any) => x?.user?.id === person.id) as
+                        PresenceState | undefined
+                    }
+                    you={person.id === user.id}
+                    host={host}
+                    onKick={() => send({ type: 'kick', clientId: person.id })}
+                    onMakeHost={() => send({ type: 'make_host', clientId: person.id })}
+                  />
+                ))}
+              </div>
+              {roster.length <= 1 && (
+                <div className="empty-presence">
+                  Alone for now.
+                  <br />
+                  <button className="text-button" onClick={() => copy(invite)}>
+                    Copy an invite link.
+                  </button>
+                </div>
+              )}
+            </Panel>
+          </aside>
+          <section className="editor-pane">
+            <div className="editor-wrap">
+              <CarrelEditor
+                provider={activeProvider}
+                language={language}
+                readOnly={readonly && !host}
+                onInput={() => undefined}
+              />
+            </div>
+            <div className="statusbar">
+              <span>Ln 1 / Col 1</span>
+              <span>{labels[language]}</span>
+              <span>{roster.length} peers</span>
+              <span>{readonly ? 'READ-ONLY' : activeProvider.status.toUpperCase()}</span>
+            </div>
+          </section>
+          <aside className="activity-pane">
+            <ResizeControl value={right} onChange={(v) => setPane('right', v)} />
+            <Panel label="ACTIVITY">
+              <div className="activity-list">
+                {feed.length ? (
+                  feed.map((event, index) => (
+                    <ListRow key={`${event.event}-${index}`}>
+                      <Activity size={14} />
+                      <span>
+                        <strong>{event.event}</strong>
+                        <small>{event.actorId?.slice(0, 8)}</small>
+                      </span>
+                    </ListRow>
+                  ))
+                ) : (
+                  <div className="empty-presence">Audit events will appear here.</div>
+                )}
+              </div>
+            </Panel>
+          </aside>
         </div>
+        <nav className="bottom-tabs">
+          <button onClick={() => setUI({ activeTab: 'editor' })}>Editor</button>
+          <button onClick={() => setUI({ activeTab: 'people' })}>People</button>
+          <button onClick={() => setUI({ activeTab: 'activity' })}>Activity</button>
+        </nav>
       </div>
-      <div className="grain" />
-      <Toast
-        message="Changes are local to this specimen."
-        open={toast}
-        onClose={() => setToast(false)}
-      />
-    </main>
+      <Toast message={toast} open={!!toast} onClose={() => setToast('')} />
+    </Shell>
   );
 }
-export default App;
+function Participant({
+  person,
+  state,
+  you,
+  host,
+  onKick,
+  onMakeHost,
+}: {
+  person: RosterMember;
+  state?: PresenceState;
+  you: boolean;
+  host: boolean;
+  onKick: () => void;
+  onMakeHost: () => void;
+}) {
+  const status = state?.status ?? 'active';
+  return (
+    <ListRow>
+      <Avatar name={person.name} color={person.color} />
+      <span className="participant-copy">
+        <strong>
+          {person.name} {you && <Badge>YOU</Badge>}
+        </strong>
+        <small>
+          {person.role === 'host' && (
+            <span className="host-tag">
+              <Crown size={11} /> HOST
+            </span>
+          )}
+        </small>
+      </span>
+      <StatusBadge status={(status[0].toUpperCase() + status.slice(1)) as any} />
+      {host && !you && (
+        <span className="row-actions">
+          <button onClick={onMakeHost}>host</button>
+          <button onClick={onKick}>×</button>
+        </span>
+      )}
+    </ListRow>
+  );
+}
+function ResizeControl({ value, onChange }: { value: number; onChange: (value: number) => void }) {
+  const start = useRef(0);
+  return (
+    <button
+      className="resize-handle"
+      aria-label="Resize panel"
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') onChange(value - 16);
+        if (event.key === 'ArrowRight' || event.key === 'ArrowUp') onChange(value + 16);
+        if (event.key === 'Home') onChange(240);
+        if (event.key === 'End') onChange(480);
+      }}
+      onPointerDown={(event) => {
+        start.current = event.clientX;
+        const move = (e: PointerEvent) => onChange(value + e.clientX - start.current);
+        const up = () => {
+          window.removeEventListener('pointermove', move);
+          window.removeEventListener('pointerup', up);
+        };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      }}
+    >
+      <Resize size={16} />
+    </button>
+  );
+}
+export default function App() {
+  return (
+    <AppErrorBoundary>
+      <Routes>
+        <Route path="/tokens" element={<TokensPage />} />
+        <Route path="/" element={<Lobby />} />
+        <Route path="/create" element={<CreateRoom />} />
+        <Route path="/join/:roomId" element={<JoinRoom />} />
+        <Route path="/r/:roomId" element={<WorkspaceRoute />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AppErrorBoundary>
+  );
+}
+
+class AppErrorBoundary extends React.Component<React.PropsWithChildren, { error: string | null }> {
+  state = { error: null as string | null };
+  static getDerivedStateFromError(error: unknown) {
+    return { error: error instanceof Error ? error.message : String(error) };
+  }
+  render() {
+    return this.state.error ? (
+      <Shell>
+        <div className="empty-state">
+          <Panel label="WORKSPACE ERROR">
+            <p>{this.state.error}</p>
+            <Link className="btn secondary md" to="/">
+              RETURN TO LOBBY
+            </Link>
+          </Panel>
+        </div>
+      </Shell>
+    ) : (
+      this.props.children
+    );
+  }
+}

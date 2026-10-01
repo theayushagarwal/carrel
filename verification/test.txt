@@ -1,4 +1,3 @@
-$ npm test
 
 > test
 > npm run test --workspaces
@@ -10,12 +9,12 @@ $ npm test
 
  RUN  v2.1.9 /home/ubuntu/carrel/client
 
- ✓ src/ui/index.test.tsx (4 tests) 281ms
+ ✓ src/ui/index.test.tsx (4 tests) 298ms
 
  Test Files  1 passed (1)
       Tests  4 passed (4)
-   Start at  19:00:02
-   Duration  2.16s (transform 136ms, setup 175ms, collect 326ms, tests 281ms, environment 1.09s, prepare 84ms)
+   Start at  19:34:17
+   Duration  2.05s (transform 127ms, setup 148ms, collect 307ms, tests 298ms, environment 994ms, prepare 72ms)
 
 
 > @carrel/server@0.1.0 test
@@ -24,171 +23,170 @@ $ npm test
 
  RUN  v2.1.9 /home/ubuntu/carrel/server
 
-(node:20144) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(node:31677) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
-{"level":30,"time":1790881206050,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206186,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":134.627248,"msg":"request completed"}
-{"level":30,"time":1790881206187,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206190,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":409},"responseTime":2.212656000000038,"msg":"request completed"}
-{"level":30,"time":1790881206190,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206192,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":400},"responseTime":1.0868330000000697,"msg":"request completed"}
-{"level":30,"time":1790881206192,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206206,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206193,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":400},"responseTime":0.928333000000066,"msg":"request completed"}
-{"level":30,"time":1790881206209,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":2.090845000000172,"msg":"request completed"}
-{"level":30,"time":1790881206209,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206211,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":201},"responseTime":1.650115999999798,"msg":"request completed"}
-{"level":30,"time":1790881206212,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206213,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":201},"responseTime":1.7421039999999266,"msg":"request completed"}
-{"level":30,"time":1790881206214,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206216,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":201},"responseTime":2.156419999999798,"msg":"request completed"}
-{"level":30,"time":1790881206218,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-5","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206220,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-5","res":{"statusCode":201},"responseTime":2.1413399999999,"msg":"request completed"}
-{"level":30,"time":1790881206221,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-6","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206222,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-6","res":{"statusCode":201},"responseTime":1.2985630000000583,"msg":"request completed"}
-{"level":30,"time":1790881206223,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-7","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206224,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-7","res":{"statusCode":201},"responseTime":1.1300159999998414,"msg":"request completed"}
-{"level":30,"time":1790881206224,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-8","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206225,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-8","res":{"statusCode":201},"responseTime":1.1198269999999866,"msg":"request completed"}
-{"level":30,"time":1790881206225,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-9","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206226,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-9","res":{"statusCode":201},"responseTime":0.9551219999998466,"msg":"request completed"}
-{"level":30,"time":1790881206227,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-a","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206228,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-a","res":{"statusCode":201},"responseTime":0.9210259999999835,"msg":"request completed"}
-{"level":30,"time":1790881206228,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-b","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206229,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-b","res":{"statusCode":201},"responseTime":0.8564650000000711,"msg":"request completed"}
-{"level":30,"time":1790881206229,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-c","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206230,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-c","res":{"statusCode":201},"responseTime":1.045753999999988,"msg":"request completed"}
-{"level":30,"time":1790881206231,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-d","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206232,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-d","res":{"statusCode":201},"responseTime":1.0197519999999258,"msg":"request completed"}
-{"level":30,"time":1790881206232,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-e","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206233,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-e","res":{"statusCode":201},"responseTime":1.0548440000000028,"msg":"request completed"}
-{"level":30,"time":1790881206233,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-f","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206234,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-f","res":{"statusCode":201},"responseTime":0.8485760000000937,"msg":"request completed"}
-{"level":30,"time":1790881206234,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-g","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206235,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-g","res":{"statusCode":201},"responseTime":0.8116159999999581,"msg":"request completed"}
-{"level":30,"time":1790881206235,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-h","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206236,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-h","res":{"statusCode":201},"responseTime":0.9814089999999851,"msg":"request completed"}
-{"level":30,"time":1790881206237,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-i","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206238,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-i","res":{"statusCode":201},"responseTime":0.85641499999997,"msg":"request completed"}
-{"level":30,"time":1790881206238,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-j","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206239,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-j","res":{"statusCode":201},"responseTime":0.8147440000000188,"msg":"request completed"}
-{"level":30,"time":1790881206239,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-k","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206240,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-k","res":{"statusCode":201},"responseTime":0.7968650000000252,"msg":"request completed"}
-{"level":30,"time":1790881206240,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-l","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206241,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-l","res":{"statusCode":201},"responseTime":0.7891369999999824,"msg":"request completed"}
-{"level":30,"time":1790881206241,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-m","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206242,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-m","res":{"statusCode":201},"responseTime":0.8181039999999484,"msg":"request completed"}
-{"level":30,"time":1790881206242,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-n","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206243,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-n","res":{"statusCode":201},"responseTime":0.8277479999999287,"msg":"request completed"}
-{"level":30,"time":1790881206243,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-o","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206244,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-o","res":{"statusCode":201},"responseTime":0.7916580000000977,"msg":"request completed"}
-{"level":30,"time":1790881206244,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-p","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206245,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-p","res":{"statusCode":201},"responseTime":0.8418280000000777,"msg":"request completed"}
-{"level":30,"time":1790881206245,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-q","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206246,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-q","res":{"statusCode":201},"responseTime":0.9814930000000004,"msg":"request completed"}
-{"level":30,"time":1790881206247,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-r","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206248,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-r","res":{"statusCode":201},"responseTime":1.1905169999999998,"msg":"request completed"}
-{"level":30,"time":1790881206248,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-s","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206249,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-s","res":{"statusCode":201},"responseTime":1.0341850000002069,"msg":"request completed"}
-{"level":30,"time":1790881206250,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-t","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206251,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-t","res":{"statusCode":201},"responseTime":0.9568080000001373,"msg":"request completed"}
-{"level":30,"time":1790881206251,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-u","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206252,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-u","res":{"statusCode":201},"responseTime":0.9169689999998809,"msg":"request completed"}
-{"level":30,"time":1790881206252,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-v","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206253,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-v","res":{"statusCode":201},"responseTime":0.921545000000151,"msg":"request completed"}
-{"level":30,"time":1790881206253,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-w","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206254,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-w","res":{"statusCode":201},"responseTime":0.8426520000000437,"msg":"request completed"}
-{"level":30,"time":1790881206254,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-x","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206255,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-x","res":{"statusCode":201},"responseTime":0.9286079999999401,"msg":"request completed"}
-{"level":30,"time":1790881206255,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-y","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206256,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-y","res":{"statusCode":201},"responseTime":0.9171480000002248,"msg":"request completed"}
-{"level":30,"time":1790881206257,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-z","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206258,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-z","res":{"statusCode":201},"responseTime":1.0024540000001707,"msg":"request completed"}
-{"level":30,"time":1790881206258,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-10","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206259,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-10","res":{"statusCode":201},"responseTime":0.8313499999999294,"msg":"request completed"}
-{"level":30,"time":1790881206259,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-11","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206260,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-11","res":{"statusCode":201},"responseTime":0.8030630000000656,"msg":"request completed"}
-{"level":30,"time":1790881206260,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-12","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206261,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-12","res":{"statusCode":201},"responseTime":0.831512999999859,"msg":"request completed"}
-{"level":30,"time":1790881206261,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-13","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206262,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-13","res":{"statusCode":201},"responseTime":0.7827070000000731,"msg":"request completed"}
-{"level":30,"time":1790881206262,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-14","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206263,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-14","res":{"statusCode":201},"responseTime":0.835756000000174,"msg":"request completed"}
-{"level":30,"time":1790881206263,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-15","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206265,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-15","res":{"statusCode":201},"responseTime":1.0641390000000683,"msg":"request completed"}
-{"level":30,"time":1790881206265,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-16","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206266,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-16","res":{"statusCode":201},"responseTime":1.0919209999999566,"msg":"request completed"}
-{"level":30,"time":1790881206266,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-17","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206267,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-17","res":{"statusCode":201},"responseTime":1.1089359999998578,"msg":"request completed"}
-{"level":30,"time":1790881206268,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-18","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206269,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-18","res":{"statusCode":201},"responseTime":0.9500889999999345,"msg":"request completed"}
-{"level":30,"time":1790881206269,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-19","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206270,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-19","res":{"statusCode":201},"responseTime":1.017716000000064,"msg":"request completed"}
-{"level":30,"time":1790881206270,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1a","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206271,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1a","res":{"statusCode":201},"responseTime":0.9519150000000991,"msg":"request completed"}
-{"level":30,"time":1790881206271,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1b","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206272,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1b","res":{"statusCode":201},"responseTime":1.0285539999999855,"msg":"request completed"}
-{"level":30,"time":1790881206273,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1c","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206274,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1c","res":{"statusCode":201},"responseTime":0.9692609999999604,"msg":"request completed"}
-{"level":30,"time":1790881206274,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1d","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206275,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1d","res":{"statusCode":201},"responseTime":0.9550500000000284,"msg":"request completed"}
-{"level":30,"time":1790881206275,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1e","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206289,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206276,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1e","res":{"statusCode":201},"responseTime":1.0812550000000556,"msg":"request completed"}
-{"level":30,"time":1790881206417,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":127.43863499999998,"msg":"request completed"}
-{"level":30,"time":1790881206428,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206557,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":129.05842099999995,"msg":"request completed"}
-{"level":30,"time":1790881206558,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms/join-room/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206699,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206688,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":401},"responseTime":129.90537900000004,"msg":"request completed"}
-{"level":30,"time":1790881206822,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":122.77118900000005,"msg":"request completed"}
-{"level":30,"time":1790881206822,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881206941,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":401},"responseTime":118.46763600000008,"msg":"request completed"}
-{"level":30,"time":1790881206941,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207058,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":401},"responseTime":116.30734099999995,"msg":"request completed"}
-{"level":30,"time":1790881207058,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207194,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":401},"responseTime":136.168089,"msg":"request completed"}
-{"level":30,"time":1790881207195,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-5","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207312,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-5","res":{"statusCode":401},"responseTime":117.2476680000002,"msg":"request completed"}
-{"level":30,"time":1790881207313,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-6","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207429,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-6","res":{"statusCode":429},"responseTime":116.32935399999997,"msg":"request completed"}
-{"level":30,"time":1790881207429,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-7","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207448,"pid":20144,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:46377"}
-{"level":30,"time":1790881207430,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-7","res":{"statusCode":429},"responseTime":0.5609210000002349,"msg":"request completed"}
-{"level":30,"time":1790881207471,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207473,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.3961730000000898,"msg":"request completed"}
-{"level":30,"time":1790881207474,"pid":20144,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:46735"}
-{"level":30,"time":1790881207486,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207487,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.4077729999999065,"msg":"request completed"}
-{"level":30,"time":1790881207488,"pid":20144,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:43875"}
-{"level":30,"time":1790881207513,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207515,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.5515519999999015,"msg":"request completed"}
-{"level":30,"time":1790881207515,"pid":20144,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:43557"}
-{"level":30,"time":1790881207585,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207707,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":122.41120899999987,"msg":"request completed"}
-{"level":30,"time":1790881207708,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207829,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":201},"responseTime":120.62180599999965,"msg":"request completed"}
-{"level":30,"time":1790881207829,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms/room-a/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207831,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":200},"responseTime":1.5771740000000136,"msg":"request completed"}
-{"level":30,"time":1790881207831,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms/room-b/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207841,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207832,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":401},"responseTime":0.7934210000003077,"msg":"request completed"}
-{"level":30,"time":1790881207843,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.4877540000002227,"msg":"request completed"}
-{"level":30,"time":1790881207843,"pid":20144,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:37259"}
-{"level":30,"time":1790881207848,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms/full-room/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207848,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":409},"responseTime":0.5747929999997723,"msg":"request completed"}
-{"level":30,"time":1790881207859,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1790881207860,"pid":20144,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.3832179999999425,"msg":"request completed"}
-{"level":30,"time":1790881207861,"pid":20144,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:40573"}
- ✓ src/index.test.ts (18 tests | 6 skipped) 2528ms
-   ✓ Phase 2 server core > create room with custom id; duplicate id rejected; slug validation (bad chars, length, hyphen edges) 354ms
-   ✓ Phase 2 server core > 5 wrong attempts then lockout (429-style rate_limited with retryAfterSec) 741ms
-   ✓ Phase 2 server core > abrupt socket termination removes the member without throwing 518ms
+{"level":30,"time":1790883260245,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260373,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":126.39897699999995,"msg":"request completed"}
+{"level":30,"time":1790883260374,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260377,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":409},"responseTime":2.17349999999999,"msg":"request completed"}
+{"level":30,"time":1790883260378,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260379,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":400},"responseTime":1.0785260000000108,"msg":"request completed"}
+{"level":30,"time":1790883260379,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260393,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260381,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":400},"responseTime":1.1852270000000544,"msg":"request completed"}
+{"level":30,"time":1790883260396,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":2.9164429999999584,"msg":"request completed"}
+{"level":30,"time":1790883260397,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260399,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":201},"responseTime":2.3250470000000405,"msg":"request completed"}
+{"level":30,"time":1790883260400,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260401,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":201},"responseTime":1.6630040000000008,"msg":"request completed"}
+{"level":30,"time":1790883260402,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260404,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":201},"responseTime":1.8420939999999746,"msg":"request completed"}
+{"level":30,"time":1790883260405,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-5","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260407,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-5","res":{"statusCode":201},"responseTime":2.3237950000000183,"msg":"request completed"}
+{"level":30,"time":1790883260408,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-6","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260410,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-6","res":{"statusCode":201},"responseTime":1.4161119999999983,"msg":"request completed"}
+{"level":30,"time":1790883260410,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-7","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260412,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-7","res":{"statusCode":201},"responseTime":1.129809000000023,"msg":"request completed"}
+{"level":30,"time":1790883260412,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-8","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260414,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-8","res":{"statusCode":201},"responseTime":1.7753829999999198,"msg":"request completed"}
+{"level":30,"time":1790883260414,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-9","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260416,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-9","res":{"statusCode":201},"responseTime":1.5559859999999617,"msg":"request completed"}
+{"level":30,"time":1790883260416,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-a","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260417,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-a","res":{"statusCode":201},"responseTime":1.1220790000000989,"msg":"request completed"}
+{"level":30,"time":1790883260417,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-b","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260419,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-b","res":{"statusCode":201},"responseTime":1.1796390000000656,"msg":"request completed"}
+{"level":30,"time":1790883260419,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-c","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260420,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-c","res":{"statusCode":201},"responseTime":1.2369810000000143,"msg":"request completed"}
+{"level":30,"time":1790883260421,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-d","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260422,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-d","res":{"statusCode":201},"responseTime":0.8499199999999973,"msg":"request completed"}
+{"level":30,"time":1790883260422,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-e","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260423,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-e","res":{"statusCode":201},"responseTime":1.1032579999999825,"msg":"request completed"}
+{"level":30,"time":1790883260423,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-f","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260424,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-f","res":{"statusCode":201},"responseTime":1.1204490000000078,"msg":"request completed"}
+{"level":30,"time":1790883260425,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-g","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260426,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-g","res":{"statusCode":201},"responseTime":1.1783779999999524,"msg":"request completed"}
+{"level":30,"time":1790883260426,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-h","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260427,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-h","res":{"statusCode":201},"responseTime":1.2254599999999982,"msg":"request completed"}
+{"level":30,"time":1790883260428,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-i","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260429,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-i","res":{"statusCode":201},"responseTime":0.9673559999999952,"msg":"request completed"}
+{"level":30,"time":1790883260430,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-j","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260431,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-j","res":{"statusCode":201},"responseTime":1.0207299999999577,"msg":"request completed"}
+{"level":30,"time":1790883260431,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-k","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260432,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-k","res":{"statusCode":201},"responseTime":1.1546110000000454,"msg":"request completed"}
+{"level":30,"time":1790883260433,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-l","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260434,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-l","res":{"statusCode":201},"responseTime":0.9209010000000717,"msg":"request completed"}
+{"level":30,"time":1790883260434,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-m","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260435,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-m","res":{"statusCode":201},"responseTime":0.9000250000000278,"msg":"request completed"}
+{"level":30,"time":1790883260435,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-n","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260436,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-n","res":{"statusCode":201},"responseTime":0.8085049999999683,"msg":"request completed"}
+{"level":30,"time":1790883260436,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-o","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260437,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-o","res":{"statusCode":201},"responseTime":0.7900339999999915,"msg":"request completed"}
+{"level":30,"time":1790883260437,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-p","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260438,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-p","res":{"statusCode":201},"responseTime":0.8233069999999998,"msg":"request completed"}
+{"level":30,"time":1790883260439,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-q","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260440,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-q","res":{"statusCode":201},"responseTime":0.9832760000000462,"msg":"request completed"}
+{"level":30,"time":1790883260440,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-r","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260441,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-r","res":{"statusCode":201},"responseTime":0.8856869999999617,"msg":"request completed"}
+{"level":30,"time":1790883260441,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-s","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260442,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-s","res":{"statusCode":201},"responseTime":0.9185240000000476,"msg":"request completed"}
+{"level":30,"time":1790883260442,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-t","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260443,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-t","res":{"statusCode":201},"responseTime":0.9936370000000352,"msg":"request completed"}
+{"level":30,"time":1790883260443,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-u","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260444,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-u","res":{"statusCode":201},"responseTime":0.971176000000014,"msg":"request completed"}
+{"level":30,"time":1790883260445,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-v","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260446,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-v","res":{"statusCode":201},"responseTime":0.9077539999999544,"msg":"request completed"}
+{"level":30,"time":1790883260446,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-w","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260447,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-w","res":{"statusCode":201},"responseTime":0.9362110000000712,"msg":"request completed"}
+{"level":30,"time":1790883260447,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-x","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260448,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-x","res":{"statusCode":201},"responseTime":0.8245990000000347,"msg":"request completed"}
+{"level":30,"time":1790883260448,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-y","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260449,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-y","res":{"statusCode":201},"responseTime":0.8206490000000031,"msg":"request completed"}
+{"level":30,"time":1790883260449,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-z","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260450,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-z","res":{"statusCode":201},"responseTime":1.0582930000000488,"msg":"request completed"}
+{"level":30,"time":1790883260450,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-10","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260451,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-10","res":{"statusCode":201},"responseTime":0.9169160000000147,"msg":"request completed"}
+{"level":30,"time":1790883260452,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-11","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260452,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-11","res":{"statusCode":201},"responseTime":0.8492400000000089,"msg":"request completed"}
+{"level":30,"time":1790883260453,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-12","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260454,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-12","res":{"statusCode":201},"responseTime":0.9021400000000313,"msg":"request completed"}
+{"level":30,"time":1790883260454,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-13","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260455,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-13","res":{"statusCode":201},"responseTime":0.9042309999999816,"msg":"request completed"}
+{"level":30,"time":1790883260455,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-14","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260456,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-14","res":{"statusCode":201},"responseTime":0.8835599999999886,"msg":"request completed"}
+{"level":30,"time":1790883260456,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-15","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260457,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-15","res":{"statusCode":201},"responseTime":0.8249799999999823,"msg":"request completed"}
+{"level":30,"time":1790883260457,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-16","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260458,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-16","res":{"statusCode":201},"responseTime":0.8144150000000536,"msg":"request completed"}
+{"level":30,"time":1790883260458,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-17","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260459,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-17","res":{"statusCode":201},"responseTime":0.8616909999999507,"msg":"request completed"}
+{"level":30,"time":1790883260459,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-18","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260460,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-18","res":{"statusCode":201},"responseTime":0.923383000000058,"msg":"request completed"}
+{"level":30,"time":1790883260461,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-19","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260461,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-19","res":{"statusCode":201},"responseTime":0.8689170000000104,"msg":"request completed"}
+{"level":30,"time":1790883260462,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1a","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260462,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1a","res":{"statusCode":201},"responseTime":0.8318730000000869,"msg":"request completed"}
+{"level":30,"time":1790883260463,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1b","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260464,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1b","res":{"statusCode":201},"responseTime":0.8616450000000668,"msg":"request completed"}
+{"level":30,"time":1790883260464,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1c","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260465,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1c","res":{"statusCode":201},"responseTime":0.8913340000000289,"msg":"request completed"}
+{"level":30,"time":1790883260465,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1d","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260466,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1d","res":{"statusCode":201},"responseTime":1.0727110000000266,"msg":"request completed"}
+{"level":30,"time":1790883260466,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1e","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260478,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260467,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1e","res":{"statusCode":201},"responseTime":0.8800969999999779,"msg":"request completed"}
+{"level":30,"time":1790883260597,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":119.01890100000003,"msg":"request completed"}
+{"level":30,"time":1790883260607,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260726,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":119.20246700000007,"msg":"request completed"}
+{"level":30,"time":1790883260727,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms/join-room/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260869,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883260857,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":401},"responseTime":129.650077,"msg":"request completed"}
+{"level":30,"time":1790883261002,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":132.93472999999994,"msg":"request completed"}
+{"level":30,"time":1790883261002,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261122,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":401},"responseTime":119.15554100000008,"msg":"request completed"}
+{"level":30,"time":1790883261122,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261242,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":401},"responseTime":119.87530099999981,"msg":"request completed"}
+{"level":30,"time":1790883261242,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261361,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":401},"responseTime":118.33615400000008,"msg":"request completed"}
+{"level":30,"time":1790883261361,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-5","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261483,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-5","res":{"statusCode":401},"responseTime":122.0840760000001,"msg":"request completed"}
+{"level":30,"time":1790883261484,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-6","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261602,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-6","res":{"statusCode":429},"responseTime":117.33159100000012,"msg":"request completed"}
+{"level":30,"time":1790883261602,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-7","req":{"method":"POST","url":"/api/rooms/locked-attempts/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261620,"pid":31677,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:46337"}
+{"level":30,"time":1790883261603,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-7","res":{"statusCode":429},"responseTime":0.5891400000000431,"msg":"request completed"}
+{"level":30,"time":1790883261640,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261642,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.343666000000212,"msg":"request completed"}
+{"level":30,"time":1790883261643,"pid":31677,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:45895"}
+{"level":30,"time":1790883261654,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261655,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.154515000000174,"msg":"request completed"}
+{"level":30,"time":1790883261655,"pid":31677,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:43493"}
+{"level":30,"time":1790883261679,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261680,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.3839240000002064,"msg":"request completed"}
+{"level":30,"time":1790883261681,"pid":31677,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:37861"}
+{"level":30,"time":1790883261748,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261863,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":115.13114600000017,"msg":"request completed"}
+{"level":30,"time":1790883261863,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261981,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":201},"responseTime":117.33169199999975,"msg":"request completed"}
+{"level":30,"time":1790883261981,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","req":{"method":"POST","url":"/api/rooms/room-a/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261983,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-3","res":{"statusCode":200},"responseTime":1.6521649999999681,"msg":"request completed"}
+{"level":30,"time":1790883261983,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","req":{"method":"POST","url":"/api/rooms/room-b/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261995,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883261984,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-4","res":{"statusCode":401},"responseTime":0.6878219999998691,"msg":"request completed"}
+{"level":30,"time":1790883261997,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.4765999999999622,"msg":"request completed"}
+{"level":30,"time":1790883261997,"pid":31677,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:40839"}
+{"level":30,"time":1790883262002,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","req":{"method":"POST","url":"/api/rooms/full-room/join","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883262003,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-2","res":{"statusCode":409},"responseTime":0.701104000000214,"msg":"request completed"}
+{"level":30,"time":1790883262014,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","req":{"method":"POST","url":"/api/rooms","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1790883262015,"pid":31677,"hostname":"d7256e3618e1","reqId":"req-1","res":{"statusCode":201},"responseTime":1.2711119999999028,"msg":"request completed"}
+{"level":30,"time":1790883262015,"pid":31677,"hostname":"d7256e3618e1","msg":"Server listening at http://127.0.0.1:39151"}
+ ✓ src/index.test.ts (18 tests | 6 skipped) 2433ms
+   ✓ Phase 2 server core > 5 wrong attempts then lockout (429-style rate_limited with retryAfterSec) 745ms
+   ✓ Phase 2 server core > abrupt socket termination removes the member without throwing 517ms
 
  Test Files  1 passed (1)
       Tests  12 passed | 6 skipped (18)
-   Start at  19:00:05
-   Duration  3.25s (transform 140ms, setup 0ms, collect 473ms, tests 2.53s, environment 0ms, prepare 70ms)
+   Start at  19:34:19
+   Duration  3.03s (transform 123ms, setup 0ms, collect 358ms, tests 2.43s, environment 0ms, prepare 70ms)
 
 
 > @carrel/shared@0.1.0 test
@@ -201,6 +199,6 @@ $ npm test
 
  Test Files  1 passed (1)
       Tests  1 passed (1)
-   Start at  19:00:08
-   Duration  404ms (transform 63ms, setup 0ms, collect 132ms, tests 4ms, environment 0ms, prepare 70ms)
+   Start at  19:34:22
+   Duration  433ms (transform 64ms, setup 0ms, collect 141ms, tests 4ms, environment 0ms, prepare 72ms)
 

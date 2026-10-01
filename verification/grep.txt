@@ -1,6 +1,29 @@
-$ grep -rniE "Inter|Roboto|system-ui|Arial|lucide|backdrop-filter|linear-gradient|radial-gradient|Tailwind|shadcn" client/src shared/src server/src --exclude=*.map
-client/src/styles/tokens.css:59:  cursor: pointer;
-client/src/styles/tokens.css:661:  pointer-events: none;
-client/src/App.tsx:193:                <div className="type-ui">A clear interface makes room for thought.</div>
-server/src/index.ts:269:  const cleanup = setInterval(() => {
-server/src/index.ts:547:    clearInterval(cleanup);
+$ grep -rniE "Inter|Roboto|system-ui|Arial|lucide|backdrop-filter|linear-gradient" --exclude-dir=node_modules --exclude-dir=dist .
+./client/src/styles/tokens.css:59:  cursor: pointer;
+./client/src/styles/tokens.css:661:  pointer-events: none;
+./client/src/App.tsx:228:    const timer = setInterval(() => setRetry((v) => Math.max(0, v - 1)), 1000);
+./client/src/App.tsx:229:    return () => clearInterval(timer);
+./client/src/App.tsx:592:      onPointerDown={(event) => {
+./client/src/App.tsx:594:        const move = (e: PointerEvent) => onChange(value + e.clientX - start.current);
+./client/src/App.tsx:596:          window.removeEventListener('pointermove', move);
+./client/src/App.tsx:597:          window.removeEventListener('pointerup', up);
+./client/src/App.tsx:599:        window.addEventListener('pointermove', move);
+./client/src/App.tsx:600:        window.addEventListener('pointerup', up);
+./client/src/collab/usePresence.ts:24:    window.addEventListener('pointermove', onFocus, { passive: true });
+./client/src/collab/usePresence.ts:28:      window.removeEventListener('pointermove', onFocus);
+./client/src/TokensPage.tsx:193:                <div className="type-ui">A clear interface makes room for thought.</div>
+./client/tsconfig.json:1:{"compilerOptions":{"target":"ES2020","useDefineForClassFields":true,"lib":["ES2020","DOM","DOM.Iterable"],"allowJs":false,"skipLibCheck":true,"esModuleInterop":true,"allowSyntheticDefaultImports":true,"strict":true,"forceConsistentCasingInFileNames":true,"module":"ESNext","moduleResolution":"Bundler","resolveJsonModule":true,"isolatedModules":true,"noEmit":true,"jsx":"react-jsx"},"include":["src"]}
+./server/src/index.ts:280:  const cleanup = setInterval(() => {
+./server/src/index.ts:628:    clearInterval(cleanup);
+./server/tsconfig.json:1:{"compilerOptions":{"target":"ES2022","module":"NodeNext","moduleResolution":"NodeNext","outDir":"dist","strict":true,"esModuleInterop":true},"include":["src"]}
+./shared/tsconfig.json:1:{"compilerOptions":{"target":"ES2022","module":"NodeNext","moduleResolution":"NodeNext","declaration":true,"outDir":"dist","strict":true,"esModuleInterop":true},"include":["src"]}
+grep: ./verification/grep.txt: input file is also the output
+./verification/build.txt:18:"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+./verification/build.txt:19: * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+./verification/build.txt:22:in "../node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+./verification/build.txt:27:in "../node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+./.git/hooks/fsmonitor-watchman.sample:24:# Check the hook interface version
+./.git/hooks/pre-rebase.sample:25:	exit 0 ;# we do not interrupt rebasing detached HEAD
+./.git/hooks/pre-rebase.sample:32:	exit 0 ;# we do not interrupt others.
+./.git/hooks/prepare-commit-msg.sample:38:# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+./.git/hooks/push-to-checkout.sample:39:# not interfere with the difference between the branches.

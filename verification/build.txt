@@ -1,4 +1,3 @@
-$ npm run build
 
 > build
 > npm run build --workspace shared && npm run build --workspace client && npm run build --workspace server
@@ -13,6 +12,11 @@ $ npm run build
 
 vite v6.4.3 building for production...
 transforming...
+../node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
 ../node_modules/zod/v4/core/regexes.js (74:0): A comment
 
 "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
@@ -20,15 +24,10 @@ transforming...
  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
 
 in "../node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
-../node_modules/zod/v4/core/util.js (400:0): A comment
-
-"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
-
-in "../node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
-✓ 502 modules transformed.
+✓ 585 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                                                     0.36 kB │ gzip:   0.26 kB
+dist/index.html                                                     0.36 kB │ gzip:   0.27 kB
 dist/assets/ibm-plex-mono-vietnamese-500-normal-C8zxqsMH.woff       5.62 kB
 dist/assets/ibm-plex-mono-vietnamese-400-normal-DDuiU_S-.woff       5.62 kB
 dist/assets/ibm-plex-mono-cyrillic-ext-500-normal-BIfNGwUT.woff     5.77 kB
@@ -67,9 +66,23 @@ dist/assets/instrument-sans-latin-500-normal-Z6ESRlEs.woff         21.65 kB
 dist/assets/instrument-sans-latin-600-normal-B9e8oLYv.woff         21.68 kB
 dist/assets/fraunces-latin-ext-400-normal-UihxqfOe.woff            22.37 kB
 dist/assets/fraunces-latin-400-normal-NUPT2cO8.woff                22.48 kB
-dist/assets/index-BWL0X5-t.css                                     19.40 kB │ gzip:   4.28 kB
-dist/assets/index-DEThfzq1.js                                     388.09 kB │ gzip: 123.95 kB
-✓ built in 2.62s
+dist/assets/index-4MKeVImT.css                                     24.04 kB │ gzip:   5.19 kB
+dist/assets/index-CwfyJ8Sn.js                                       2.01 kB │ gzip:   1.27 kB
+dist/assets/index-HALgKsfM.js                                       8.37 kB │ gzip:   3.61 kB
+dist/assets/index-BZt_YPgr.js                                      14.03 kB │ gzip:   6.08 kB
+dist/assets/index-B7xQ8Rnf.js                                      26.52 kB │ gzip:   8.81 kB
+dist/assets/index-CaM5pPSZ.js                                      40.25 kB │ gzip:  16.59 kB
+dist/assets/index-BbbJo4bW.js                                      45.13 kB │ gzip:  19.16 kB
+dist/assets/index-BEO66MZ4.js                                      84.71 kB │ gzip:  33.49 kB
+dist/assets/index-Bgv924ad.js                                     100.95 kB │ gzip:  38.88 kB
+dist/assets/index-l743VzHk.js                                     103.92 kB │ gzip:  34.37 kB
+dist/assets/index-CoZE39Dq.js                                     814.95 kB │ gzip: 261.72 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.29s
 
 > @carrel/server@0.1.0 build
 > tsc -p tsconfig.json
