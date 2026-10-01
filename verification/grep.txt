@@ -1,0 +1,6 @@
+$ grep -rniE "inter|roboto|system-ui|lucide|backdrop-filter|linear-gradient\(.*(purple|indigo|violet)" client/src
+client/src/styles/tokens.css:59:  cursor: pointer;
+client/src/styles/tokens.css:669:  pointer-events: none;
+client/src/App.tsx:218:                <div className="type-ui">A clear interface makes room for thought.</div>
+
+exit=0
