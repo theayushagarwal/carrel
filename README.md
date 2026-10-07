@@ -28,18 +28,18 @@ flowchart TD
         FastifyServer["Fastify HTTP Server"]
         WSServer["WebSocket Server (/ws)"]
         YDoc["In-Memory Y.Doc per Room"]
-        DB[(better-sqlite3 WAL Database)]
+        DB[("better-sqlite3 WAL Database")]
         Limiter["Crypto Concurrency Limiter (4)"]
 
-        FastifyServer -->|Issue Ticket / Auth| DB
-        FastifyServer -->|scrypt Async| Limiter
-        WSServer -->|Validate Ticket| FastifyServer
-        WSServer -->|Sync & Awareness| YDoc
-        YDoc -->|Snapshots (Debounced)| DB
+        FastifyServer -->|"Issue Ticket / Auth"| DB
+        FastifyServer -->|"scrypt Async"| Limiter
+        WSServer -->|"Validate Ticket"| FastifyServer
+        WSServer -->|"Sync & Awareness"| YDoc
+        YDoc -->|"Snapshots (Debounced)"| DB
     end
 
-    CP <==>|Binary WebSocket (Frames 0, 1, 2)| WSServer
-    UI <==>|REST API (/api/rooms)| FastifyServer
+    CP <-->|"Binary WebSocket (Frames 0, 1, 2)"| WSServer
+    UI <-->|"REST API (/api/rooms)"| FastifyServer
 ```
 
 ---
