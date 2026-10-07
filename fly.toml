@@ -1,0 +1,41 @@
+# fly.toml app configuration file for carrel single-service deployment
+app = 'carrel'
+primary_region = 'iad'
+
+[build]
+
+[env]
+  PORT = '8080'
+  DATABASE_PATH = '/data/carrel.db'
+  ROOMS_PER_IP_PER_HOUR = '10'
+  MAX_ROOMS = '500'
+  ENABLE_TEST_ENDPOINTS = 'false'
+  TRUST_PROXY = 'true'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = 'connections'
+    hard_limit = 1000
+    soft_limit = 800
+
+[[http_service.checks]]
+  grace_period = '10s'
+  interval = '30s'
+  method = 'GET'
+  path = '/api/health'
+  timeout = '5s'
+
+[mounts]
+  source = 'carrel_data'
+  destination = '/data'
+  initial_size = '1gb'
+
+[[vm]]
+  size = 'shared-cpu-1x'

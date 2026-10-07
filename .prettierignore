@@ -1,0 +1,8 @@
+node_modules
+dist
+test-results
+playwright-report
+coverage
+data
+.system_generated
+verification

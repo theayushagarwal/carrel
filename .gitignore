@@ -5,7 +5,11 @@ screenshots
 
 *.tsbuildinfo
 server/data
+data/
 .env
+.env.*
 *.db
 *.db-wal
 *.db-shm
+*.zip
+test-results/

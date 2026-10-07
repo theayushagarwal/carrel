@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import type { PresenceState } from '@carrel/shared';
 import type { CarrelProvider } from './CarrelProvider';
 
@@ -11,7 +11,8 @@ export function usePresence(provider: CarrelProvider | null, user: PresenceState
     const publish = (status: PresenceState['status']) => {
       if (statusRef.current === status) return;
       statusRef.current = status;
-      provider.awareness.setLocalState({ user, status });
+      provider.awareness.setLocalStateField('user', user);
+      provider.awareness.setLocalStateField('status', status);
     };
     const setActive = () => {
       publish('active');
@@ -20,7 +21,9 @@ export function usePresence(provider: CarrelProvider | null, user: PresenceState
     };
     const onVisibility = () => publish(document.visibilityState === 'hidden' ? 'away' : 'active');
     const onFocus = () => setActive();
-    provider.awareness.setLocalState({ user, status: 'active' });
+    provider.awareness.setLocalStateField('user', user);
+    provider.awareness.setLocalStateField('status', 'active');
+    setActive();
     window.addEventListener('pointermove', onFocus, { passive: true });
     window.addEventListener('keydown', onFocus);
     document.addEventListener('visibilitychange', onVisibility);
@@ -36,11 +39,12 @@ export function usePresence(provider: CarrelProvider | null, user: PresenceState
     noteTyping: () => {
       if (!provider || !user) return;
       if (typingTimer.current) clearTimeout(typingTimer.current);
-      provider.awareness.setLocalState({ user, status: 'typing' });
-      typingTimer.current = setTimeout(
-        () => provider.awareness.setLocalState({ user, status: 'active' }),
-        1500,
-      );
+      provider.awareness.setLocalStateField('user', user);
+      provider.awareness.setLocalStateField('status', 'typing');
+      typingTimer.current = setTimeout(() => {
+        provider.awareness.setLocalStateField('user', user);
+        provider.awareness.setLocalStateField('status', 'active');
+      }, 1500);
     },
   };
 }
@@ -48,15 +52,16 @@ export function usePresence(provider: CarrelProvider | null, user: PresenceState
 export function useCoalescedAwareness(provider: CarrelProvider | null) {
   const mapRef = useRef<Record<number, PresenceState>>({});
   const frame = useRef<number>();
-  const [, force] = useStateTick();
+  const [, force] = useReducer((x) => (x + 1) | 0, 0);
   useEffect(() => {
     if (!provider) return;
     const flush = () => {
       frame.current = undefined;
-      mapRef.current = {};
+      const next: Record<number, PresenceState> = {};
       provider.awareness.getStates().forEach((state, id) => {
-        if (state?.user && state?.status) mapRef.current[id] = state as PresenceState;
+        if (state?.user && state?.status) next[id] = state as PresenceState;
       });
+      mapRef.current = next;
       force();
     };
     const onChange = () => {
@@ -68,10 +73,6 @@ export function useCoalescedAwareness(provider: CarrelProvider | null) {
       provider.awareness.off('change', onChange);
       if (frame.current !== undefined) cancelAnimationFrame(frame.current);
     };
-  }, [provider, force]);
+  }, [provider]);
   return mapRef.current;
-}
-function useStateTick() {
-  const [, set] = useState(0);
-  return [null, () => set((value) => value + 1)] as const;
 }

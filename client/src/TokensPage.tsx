@@ -6,16 +6,16 @@ import { Avatar, Button, Input, Panel, StatusBadge, Toast, Toggle } from './ui';
 
 type Status = 'Typing' | 'Active' | 'Idle' | 'Away' | 'Reconnecting';
 const swatches = [
-  ['ink-950', '#14110F', 'app background'],
-  ['ink-900', '#1A1613', 'panels'],
-  ['ink-850', '#211C18', 'raised surfaces'],
-  ['ink-700', '#302A24', 'hairline borders'],
-  ['ink-500', '#6F675B', 'muted / disabled'],
-  ['paper-300', '#A39A8B', 'secondary text'],
-  ['paper-100', '#EDE6DA', 'primary text'],
-  ['brass-500', '#D9A441', 'accent / focus'],
-  ['verdigris-500', '#4FA39A', 'online / synced'],
-  ['madder-500', '#D2543A', 'error / destructive'],
+  ['ink-950', 'var(--ink-950)', 'app background'],
+  ['ink-900', 'var(--ink-900)', 'panels'],
+  ['ink-850', 'var(--ink-850)', 'raised surfaces'],
+  ['ink-700', 'var(--ink-700)', 'hairline borders'],
+  ['ink-500', 'var(--ink-500)', 'muted / disabled'],
+  ['paper-300', 'var(--paper-300)', 'secondary text'],
+  ['paper-100', 'var(--paper-100)', 'primary text'],
+  ['brass-500', 'var(--brass-500)', 'accent / focus'],
+  ['verdigris-500', 'var(--verdigris-500)', 'online / synced'],
+  ['madder-500', 'var(--madder-500)', 'error / destructive'],
 ];
 const statuses: Status[] = ['Typing', 'Active', 'Idle', 'Away', 'Reconnecting'];
 const iconSet = [

@@ -6,14 +6,18 @@
     "build": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests --pool=forks --poolOptions.forks.singleFork",
     "lint": "prettier --check src",
-    "dev": "SESSION_SECRET=local-development-secret-please-change-1234567890 tsx watch src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
-    "seed": "SESSION_SECRET=local-development-secret-please-change-1234567890 tsx src/seed.ts"
+    "seed": "tsx src/seed.ts",
+    "loadtest": "tsx scripts/loadtest.ts"
   },
   "dependencies": {
+    "@fastify/compress": "^9.2.0",
     "@fastify/cors": "^11.3.0",
+    "@fastify/static": "^10.1.5",
     "better-sqlite3": "^13.0.3",
     "fastify": "^5.2.1",
+    "lib0": "^0.2.99",
     "ws": "^8.22.0",
     "y-protocols": "^1.0.7",
     "yjs": "^13.6.33",

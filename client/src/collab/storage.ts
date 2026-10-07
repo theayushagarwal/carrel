@@ -54,13 +54,12 @@ export function savePaneSizes(leftWidth: number, rightWidth: number) {
   localStorage.setItem(key('paneSizes'), JSON.stringify({ leftWidth, rightWidth }));
 }
 export function apiBase() {
-  const url = new URL(window.location.href);
-  if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') return 'http://localhost:3001';
-  const publicHost = url.hostname.startsWith('4173-')
-    ? `3001-${url.hostname.slice(5)}`
-    : url.hostname;
-  return `${url.protocol}//${publicHost}`;
+  return (import.meta.env.VITE_API_URL as string) || '';
 }
 export function wsBase() {
-  return apiBase().replace(/^http/, 'ws');
+  if (import.meta.env.VITE_WS_URL) {
+    return import.meta.env.VITE_WS_URL as string;
+  }
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${window.location.host}`;
 }
